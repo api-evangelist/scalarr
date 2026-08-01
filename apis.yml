@@ -1,7 +1,27 @@
 aid: scalarr
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/scalarr.png
 name: Scalarr
-description: Scalarr is a company surfaced as a portfolio company of speedinvest and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Scalarr is an AI-powered cybersecurity company that builds machine-learning
+  and neural-network detection systems to protect businesses from fraud and
+  cyber threats in real time. Its Protection Suite detects and blocks mobile ad
+  fraud on behalf of user-acquisition teams and mobile marketers, distinguishing
+  fraudulent installs and in-app events from genuine ones, while its AI EdgeLabs
+  product extends the same detection approach to edge and IoT cybersecurity.
+  Scalarr is a portfolio company of Speedinvest. As of this profile the company
+  publishes a marketing site, blog, and product pages but exposes no public
+  developer portal, API reference, SDK, or machine-readable API specification.
 url: https://raw.githubusercontent.com/api-evangelist/scalarr/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,12 +31,37 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
+- Cybersecurity
+- Fraud Detection
+- Mobile Ad Fraud
+- Machine Learning
+- Artificial Intelligence
+- Marketing
+- IoT Security
 apis: []
+common:
+- type: Website
+  url: https://scalarr.io
+- type: Blog
+  url: https://scalarr.io/blog/
+- type: SignUp
+  url: https://scalarr.io/ps_application_form/
+- type: TermsOfService
+  url: https://scalarr.io/document/services_agreement/
+- type: PrivacyPolicy
+  url: https://scalarr.io/document/scalarr-privacy-policy/
+- type: DomainSecurity
+  url: security/scalarr-domain-security.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-21'
+  status: minimal
+  artifacts_added: 1
+  pass: local-v1
