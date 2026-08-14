@@ -1,67 +1,191 @@
 aid: scalarr
 accessModel:
-  pricing: unknown
-  onboarding: unknown
-  trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: true
+  label: Free tier plus paid plans
+  confidence: high
+  source:
+  - https://edgelabs.ai/pricing
+  - https://github.com/agent-defense/parallax
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/scalarr.png
 name: Scalarr
 description: >-
-  Scalarr is an AI-powered cybersecurity company that builds machine-learning
-  and neural-network detection systems to protect businesses from fraud and
-  cyber threats in real time. Its Protection Suite detects and blocks mobile ad
-  fraud on behalf of user-acquisition teams and mobile marketers, distinguishing
-  fraudulent installs and in-app events from genuine ones, while its AI EdgeLabs
-  product extends the same detection approach to edge and IoT cybersecurity.
-  Scalarr is a portfolio company of Speedinvest. As of this profile the company
-  publishes a marketing site, blog, and product pages but exposes no public
-  developer portal, API reference, SDK, or machine-readable API specification.
+  Scalarr Inc. is a cybersecurity company that now operates primarily as AI
+  EdgeLabs (edgelabs.ai), an AI-native runtime detection and response platform for
+  workloads, containers, GPU environments, AI agents and edge infrastructure, with
+  local inference, zero data egress, and out-of-the-box NIS2 and Cyber Resilience
+  Act control mapping in its Compliance Center. It publishes Parallax, an
+  Apache-2.0 runtime security engine for AI agents written in Rust, which ships as
+  a single binary exposing a two-endpoint HTTP evaluation API (POST /evaluate,
+  GET /health) plus a proxy mode that sits between an agent and the LLM API, 54
+  curated rules across five evaluator engines, and first-party integrations for
+  OpenClaw, Claude Code and the Codex CLI. Scalarr's original business - the
+  machine-learning mobile ad-fraud Protection Suite and DeepView on scalarr.io -
+  appears dormant: the site is still served but its content and sitemap have not
+  been updated since 2022-2023 and api.scalarr.io answers every path with a
+  default OpenResty 404. Scalarr is a portfolio company of Speedinvest. The hosted
+  AI EdgeLabs platform API at portal.edgelabs.ai/api/ is real but undocumented and
+  authentication-gated; no OpenAPI, AsyncAPI, GraphQL schema or MCP server is
+  published for any surface.
 url: https://raw.githubusercontent.com/api-evangelist/scalarr/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - speedinvest
-x-tier: stub
-x-tier-reason: portfolio-lead
-specificationVersion: '0.20'
+x-tier: profiled
+x-tier-reason: >-
+  Real public API surface found on the AI EdgeLabs / Parallax side after the first
+  round recorded the company as a marketing-site-only stub.
+specificationVersion: '0.21'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - Cybersecurity
-- Fraud Detection
-- Mobile Ad Fraud
+- Runtime Security
+- AI Agent Security
+- Container Security
+- Kubernetes
+- Edge Computing
+- Vulnerability Management
+- Compliance
+- NIS2
 - Machine Learning
 - Artificial Intelligence
-- Marketing
-- IoT Security
-apis: []
+- Open Source
+- Fraud Detection
+- Mobile Ad Fraud
+apis:
+- name: Parallax Evaluation API
+  description: >-
+    Self-hosted HTTP API of Parallax, the Apache-2.0 runtime security engine
+    Scalarr publishes for AI agents. Two endpoints: POST /evaluate takes a
+    lifecycle event (message.before, tool.before, tool.after, params.before) with
+    optional tool_name, tool_args, tool_result, message_text, model and params,
+    runs it through a cost-ordered chain of regex, keyword-pattern, Sigma, CEL and
+    SQL evaluators, and returns a decision (block, redact, detect or allow) with
+    the reasons that matched and the elapsed evaluation time; GET /health returns
+    status, mode, evaluator count and version. A proxy mode fronts the Anthropic
+    Messages API and evaluates traffic transparently. The server ships with no
+    authentication and binds to 127.0.0.1:9920 by default.
+  humanURL: https://github.com/agent-defense/parallax
+  baseURL: http://{host}:{port}
+  tags:
+  - Runtime Security
+  - AI Agent Security
+  - Open Source
+  - Prompt Injection
+  - Policy Enforcement
+  properties:
+  - type: Documentation
+    url: https://github.com/agent-defense/parallax/tree/main/docs
+  - type: APIReference
+    url: https://github.com/agent-defense/parallax/blob/main/docs/integrations/generic.md
+  - type: GettingStarted
+    url: https://github.com/agent-defense/parallax#-quick-start
+  - type: SourceCode
+    url: https://github.com/agent-defense/parallax
+  - type: Roadmap
+    url: https://github.com/agent-defense/parallax#-roadmap
+  - type: Webhooks
+    url: asyncapi/scalarr-parallax-webhooks.yml
+  - type: CLI
+    url: cli/scalarr-cli.yml
+- name: AI EdgeLabs Portal API
+  description: >-
+    The HTTP API behind the AI EdgeLabs customer console at portal.edgelabs.ai.
+    Confirmed live on 2026-08-13 - every path under /api/ answered HTTP 401 with a
+    structured JSON envelope {"message","status","errorCode","title"} - but it is
+    entirely undocumented: no reference page, no OpenAPI, no published
+    authentication model, and no anonymous OAuth or OpenID discovery document.
+    Console sign-in federates through Google and GitHub OAuth. Recorded here as a
+    measured, authentication-gated surface, not as a documented developer API.
+  humanURL: https://portal.edgelabs.ai
+  baseURL: https://portal.edgelabs.ai/api/
+  tags:
+  - Runtime Security
+  - Cybersecurity
+  - Compliance
+  properties:
+  - type: SignUp
+    url: https://portal.edgelabs.ai
+  - type: Authentication
+    url: authentication/scalarr-authentication.yml
+  - type: ErrorCatalog
+    url: errors/scalarr-problem-types.yml
 common:
 - type: Website
   url: https://scalarr.io
+- type: Website
+  url: https://edgelabs.ai
+- type: Blog
+  url: https://edgelabs.ai/blog
 - type: Blog
   url: https://scalarr.io/blog/
+- type: Pricing
+  url: https://edgelabs.ai/pricing
 - type: SignUp
-  url: https://scalarr.io/ps_application_form/
+  url: https://portal.edgelabs.ai
+- type: Support
+  url: https://edgelabs.ai/contact-us
+- type: GitHubOrganization
+  url: https://github.com/agent-defense
+- type: Roadmap
+  url: https://github.com/agent-defense/parallax#-roadmap
 - type: TermsOfService
   url: https://scalarr.io/document/services_agreement/
+- type: TermsOfService
+  url: https://edgelabs.ai/terms-and-conditions
 - type: PrivacyPolicy
   url: https://scalarr.io/document/scalarr-privacy-policy/
+- type: PrivacyPolicy
+  url: https://edgelabs.ai/privacy-notice
+- type: LLMsTxt
+  url: llms/scalarr-llms.txt
+- type: WellKnown
+  url: well-known/scalarr-well-known.yml
+- type: SecurityTxt
+  url: well-known/scalarr-security.txt
+- type: Security
+  url: security/scalarr-vulnerability-disclosure.yml
+- type: VulnerabilityDisclosure
+  url: security/scalarr-vulnerability-disclosure.yml
 - type: DomainSecurity
   url: security/scalarr-domain-security.yml
+- type: Packages
+  url: packages/scalarr-packages.yml
+- type: CLI
+  url: cli/scalarr-cli.yml
+- type: ChangeLog
+  url: changelog/scalarr-changelog.yml
+- type: Lifecycle
+  url: lifecycle/scalarr-lifecycle.yml
+- type: Conformance
+  url: conformance/scalarr-conformance.yml
+- type: Authentication
+  url: authentication/scalarr-authentication.yml
+- type: Conventions
+  url: conventions/scalarr-conventions.yml
+- type: ErrorCatalog
+  url: errors/scalarr-problem-types.yml
+- type: Webhooks
+  url: asyncapi/scalarr-parallax-webhooks.yml
+- type: Plans
+  url: plans/scalarr-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/scalarr-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-21'
-  status: minimal
-  artifacts_added: 1
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 15
   pass: local-v1
