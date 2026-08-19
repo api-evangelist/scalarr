@@ -41,7 +41,7 @@ x-tier: profiled
 x-tier-reason: >-
   Real public API surface found on the AI EdgeLabs / Parallax side after the first
   round recorded the company as a marketing-site-only stub.
-specificationVersion: '0.21'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-08-13'
 tags:
