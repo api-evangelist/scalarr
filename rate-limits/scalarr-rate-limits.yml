@@ -1,0 +1,49 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://edgelabs.ai/pricing, https://github.com/agent-defense/parallax
+  (README + docs/integrations/generic.md), and a live unauthenticated probe of
+  https://portal.edgelabs.ai/api/
+limit_count: 0
+note: >-
+  Scalarr publishes NO HTTP rate limits and NO rate-limit response headers for
+  any of its APIs. Three surfaces were checked. (1) The Parallax evaluation API
+  is self-hosted and binds to 127.0.0.1:9920 by default; its documentation states
+  no request ceiling, and its only rate-limiting concept is the opposite
+  direction — a SQL evaluator that rate-limits the AGENT's tool calls as a
+  security rule, not the caller's requests. (2) The AI EdgeLabs portal API at
+  portal.edgelabs.ai/api/ answers unauthenticated requests with a bare 401 JSON
+  envelope carrying no RateLimit-*, X-RateLimit-* or Retry-After header. (3) The
+  published plans meter NODES and AI playbooks per day (10 / 50 / unlimited),
+  which are product quotas attached to a tier, not API request limits — they are
+  recorded in plans/scalarr-plans-pricing.yml, not here. An honest zero.
+limits: []
+headers:
+  observed: []
+  documented: []
+  note: >-
+    No rate-limit headers observed on the one live response available without
+    credentials (portal.edgelabs.ai/api/ → 401 application/json), and none
+    documented anywhere.
+exhaustion:
+  status_code: null
+  retry_after: false
+evidence:
+  - url: https://portal.edgelabs.ai/api/
+    status: 401
+    note: response headers carried no rate-limit signal
+  - url: https://github.com/agent-defense/parallax/blob/main/docs/integrations/generic.md
+    status: 200
+    note: documents POST /evaluate and GET /health with no rate limit
+  - url: https://edgelabs.ai/pricing
+    status: 200
+    note: node counts and playbook/day quotas only
+related_quotas:
+  - scope: plan
+    name: nodes
+    values: [3, 10, 30, unlimited]
+    source: https://edgelabs.ai/pricing
+  - scope: plan
+    name: ai_playbooks_per_day
+    values: [10, 50, unlimited, unlimited]
+    source: https://edgelabs.ai/pricing

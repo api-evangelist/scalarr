@@ -1,0 +1,144 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of /.well-known/* on every Scalarr-operated host
+note: >-
+  Scalarr Inc. operates two public web properties: scalarr.io (the legacy mobile
+  ad-fraud brand) and edgelabs.ai / portal.edgelabs.ai (AI EdgeLabs, the runtime
+  security product, whose footer reads "© All rights reserved. Scalarr Inc., 2026").
+  Exactly ONE real well-known document was found across all hosts: an RFC 9116
+  security.txt served as text/plain by the customer portal. Every other 200 on
+  portal.edgelabs.ai is the Angular single-page-app catch-all returning the same
+  5,768-byte HTML shell for any path — those are recorded as misses, not hits.
+hosts:
+  - host: portal.edgelabs.ai
+    paths:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        bytes: 67
+        file: well-known/scalarr-security.txt
+        real_document: true
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: >-
+          SPA catch-all HTML shell. NOT an A2A agent card — no a2a/ artifact was
+          written and no AgentCard pointer emitted.
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        bytes: 5768
+        real_document: false
+        note: SPA catch-all HTML shell, not a document
+  - host: edgelabs.ai
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        real_document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        real_document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        real_document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        real_document: false
+      - path: /.well-known/api-catalog
+        status: 404
+        real_document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        real_document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        real_document: false
+      - path: /.well-known/agent.json
+        status: 404
+        real_document: false
+  - host: scalarr.io
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        real_document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        real_document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        real_document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        real_document: false
+      - path: /.well-known/api-catalog
+        status: 404
+        real_document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        real_document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        real_document: false
+      - path: /.well-known/agent.json
+        status: 404
+        real_document: false
+  - host: api.scalarr.io
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        real_document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        real_document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        real_document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        real_document: false
+      - path: /.well-known/agent.json
+        status: 404
+        real_document: false
+    note: >-
+      api.scalarr.io resolves and answers, but every path returns the default
+      OpenResty 404 page — the vhost is up with no application behind it.
+summary:
+  hosts_probed: 4
+  paths_probed: 29
+  real_documents: 1
+  security_txt: true
+  api_catalog: false
+  openid_configuration: false
+  agent_card: false

@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  https://github.com/agent-defense/parallax (README.md,
+  docs/integrations/generic.md, src/server/api.rs, src/reporting/webhook.rs,
+  parallax.yaml) plus a live probe of https://portal.edgelabs.ai/api/
+note: >-
+  Cross-cutting runtime semantics for the two Scalarr API surfaces. Derived from
+  the provider's own published source and documentation, not from an OpenAPI —
+  Scalarr publishes no specification. Every claim below is traceable to a named
+  file or an observed response.
+apis:
+  - api: Parallax Evaluation API
+    media_type: application/json
+    auth_style: none
+    base_url: http://{host}:{port}
+    base_url_defaults:
+      host: 127.0.0.1
+      port: 9920
+    idempotency:
+      supported: false
+      header: null
+      note: >-
+        No idempotency key is accepted or documented. Evaluation is a read-only
+        decision per event in the request path, but the SQL evaluator keeps
+        temporal state keyed by session_id, so a replayed POST /evaluate can
+        change a rate-limit verdict. No Idempotency pointer is emitted in
+        apis.yml for that reason.
+    pagination:
+      style: none
+      note: Neither endpoint returns a collection.
+    versioning:
+      style: none-in-transport
+      note: >-
+        No version prefix, no version header, no media-type versioning. The
+        running version is only discoverable by reading the `version` field of
+        GET /health, which returns the compiled CARGO_PKG_VERSION.
+    request_id:
+      supported: false
+      correlation_field: session_id
+      note: >-
+        No request-id header. session_id in the request body is the only
+        correlation handle, and the docs call it out as required for the
+        SQL/temporal rules to work at all.
+    error_envelope:
+      shape: '{"error": "<message>"}'
+      status: 400
+      note: >-
+        The only error path in src/server/api.rs is a JSON-rejection handler that
+        returns 400 with a single `error` string. Not RFC 9457.
+    rate_limit_signal:
+      headers: []
+      note: No rate limiting on the caller.
+    conventions:
+      - Four lifecycle stages are the primary dimension - message.before, tool.before, tool.after, params.before - and every request must name one.
+      - Four decision actions are returned - block, redact, detect, allow - aggregated by severity block > redact > detect > allow.
+      - blocked is true ONLY for the block action; the docs warn explicitly that a redact decision leaves blocked false.
+      - elapsed_ms is returned on every response, rounded to one decimal place, and the docs advise callers to track it against their own SLA.
+      - Callers must choose fail-open or fail-closed themselves; the docs recommend fail-closed for production.
+  - api: AI EdgeLabs Portal API
+    media_type: application/json
+    auth_style: gated
+    base_url: https://portal.edgelabs.ai/api/
+    error_envelope:
+      shape: '{"message": "...", "status": 401, "errorCode": 101, "title": "Unauthorized"}'
+      note: >-
+        Observed verbatim on 2026-08-13. A vendor-specific envelope with both an
+        HTTP status mirror and a numeric errorCode. Not RFC 9457
+        (application/problem+json); Content-Type is application/json.
+    idempotency:
+      supported: unknown
+      note: Undocumented and unreachable without credentials.
+    pagination:
+      style: unknown
+    versioning:
+      style: unknown
+      note: No version segment appears in the /api/ prefix.
+    rate_limit_signal:
+      headers: []
+cross_links:
+  errors: errors/scalarr-problem-types.yml
+  authentication: authentication/scalarr-authentication.yml
+  lifecycle: lifecycle/scalarr-lifecycle.yml
+  rate_limits: rate-limits/scalarr-rate-limits.yml
+  webhooks: asyncapi/scalarr-parallax-webhooks.yml

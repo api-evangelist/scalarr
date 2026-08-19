@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: searched
+source: https://edgelabs.ai/pricing
+note: >-
+  Published pricing exists for AI EdgeLabs (the Scalarr Inc. runtime-security
+  product) only. The legacy Scalarr mobile ad-fraud products (Protection Suite,
+  DeepView) publish no prices — scalarr.io routes every commercial path through
+  an application form. Parallax, the open-source agent runtime-security engine,
+  is Apache-2.0 and free. Node counts are the metering unit; the AI-playbook
+  quota is the only other published limit.
+currency: USD
+billing_period: month
+plans:
+  - name: Free
+    price: 0
+    currency: USD
+    period: month
+    free: true
+    limits:
+      nodes: 3
+      ai_playbooks_per_day: 10
+    included:
+      - Standard workload security
+      - AI/LLM detection
+      - Standard support
+    overage: null
+  - name: Pro
+    price: 349
+    currency: USD
+    period: month
+    free: false
+    limits:
+      nodes: 10
+      ai_playbooks_per_day: 50
+    included:
+      - Everything in Free
+      - Advanced workload security
+      - AI / LLM Security and Deep Monitoring
+      - Multi-stage attack detection
+      - 24h SLA support
+    overage: null
+  - name: Growth
+    price: 799
+    currency: USD
+    period: month
+    free: false
+    limits:
+      nodes: 30
+      ai_playbooks_per_day: unlimited
+    included:
+      - Everything in Pro
+      - Unlimited AI-based Playbooks / day
+      - Priority support
+    overage: null
+  - name: Enterprise
+    price: null
+    currency: USD
+    period: custom
+    free: false
+    contact_sales: true
+    limits:
+      nodes: unlimited
+      ai_playbooks_per_day: unlimited
+    included:
+      - Everything in Growth
+      - On-Prem / Air-Gapped Deployment Included
+      - Multi-tenant management
+      - Custom features and integrations
+      - Dedicated account manager
+      - Custom SLAs
+    overage: null
+  - name: Parallax (open source)
+    price: 0
+    currency: USD
+    period: perpetual
+    free: true
+    license: Apache-2.0
+    limits: {}
+    included:
+      - Self-hosted single-binary evaluation server
+      - 54 curated rules across 5 evaluator engines
+      - Server mode and proxy mode
+    overage: null
+    source: https://github.com/agent-defense/parallax
+plan_count: 5

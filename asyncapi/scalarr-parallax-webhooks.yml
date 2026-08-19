@@ -1,0 +1,101 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  https://github.com/agent-defense/parallax — README.md (Reporting configuration),
+  parallax.yaml, and src/reporting/webhook.rs (the code that builds and sends the
+  payload)
+note: >-
+  Scalarr publishes NO AsyncAPI document. It does ship one real outbound event
+  surface: Parallax POSTs a decision event to an operator-configured webhook URL.
+  This file is the webhook CATALOG, not a fabricated AsyncAPI — the field list is
+  read verbatim from the serde_json payload constructed in
+  src/reporting/webhook.rs, so it is exact rather than inferred. The AI EdgeLabs
+  hosted platform publishes no webhook, event, or streaming surface at all.
+  apis.yml therefore carries a Webhooks pointer and NO AsyncAPI pointer.
+asyncapi_published: false
+webhooks:
+  published: true
+  direction: outbound
+  api: Parallax Evaluation API
+  transport: HTTPS POST
+  content_type: application/json
+  delivery:
+    timeout_seconds: 5
+    retries: 0
+    retry_note: >-
+      No retry, no backoff, no dead-letter. A failed delivery is logged at warn
+      (4xx/5xx) or error (transport failure) and dropped. Delivery never blocks
+      or delays the evaluation pipeline — the decision is returned to the caller
+      regardless.
+    ordering: none
+    signing:
+      supported: false
+      note: >-
+        No HMAC signature, no shared secret, no timestamp-nonce header. A receiver
+        cannot verify the sender, so the endpoint must be network-restricted.
+  configuration:
+    file: parallax.yaml
+    keys:
+      - key: reporting.webhook_url
+        description: Destination URL. Absent means webhook reporting is disabled.
+        example: https://siem.example.com
+      - key: reporting.webhook_events
+        description: Which decision actions trigger a send.
+        default: [block, redact]
+        allowed: [block, redact, detect, allow]
+      - key: reporting.log_file
+        description: Append-only JSONL audit trail written alongside the webhook.
+        default: ./logs/audit.jsonl
+  events:
+    - name: decision
+      description: >-
+        One evaluation decision. Emitted after the evaluator chain resolves, only
+        when the aggregated action is in reporting.webhook_events.
+      trigger_actions: [block, redact]
+      trigger_actions_note: Defaults; configurable to include detect and allow.
+      payload:
+        - field: timestamp
+          type: number
+          description: Unix epoch seconds of the evaluated event.
+        - field: stage
+          type: string
+          enum: [message.before, tool.before, tool.after, params.before]
+          description: Lifecycle stage the event was submitted at.
+        - field: session_id
+          type: string
+          description: Caller-supplied session identifier.
+        - field: user_id
+          type: string
+          description: Caller-supplied user identifier.
+        - field: channel
+          type: string
+          description: Caller-supplied channel or conversation identifier.
+        - field: tool_name
+          type: string
+          nullable: true
+          description: Tool the agent was calling, when the stage is tool-scoped.
+        - field: action
+          type: string
+          enum: [block, redact, detect, allow]
+          description: Aggregated decision.
+        - field: reasons
+          type: array
+          items: string
+          description: Human-readable list of the rules that matched.
+        - field: evaluator_count
+          type: integer
+          description: Number of evaluator results aggregated into this decision.
+  intended_consumers:
+    - SIEM
+    - Slack
+    - PagerDuty
+  consumer_note: >-
+    Named as intended destinations in parallax.yaml comments and the README. No
+    packaged connector exists — the README roadmap lists Slack, PagerDuty and SIEM
+    connectors as future work, so today the operator receives raw JSON on a URL
+    they stand up themselves.
+gaps:
+  - No signature or shared secret on the delivered payload.
+  - No retry or delivery guarantee.
+  - No AsyncAPI, event catalog page, or schema published by the vendor.
+  - The hosted AI EdgeLabs platform exposes no webhook at all.

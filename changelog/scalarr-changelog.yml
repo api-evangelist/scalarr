@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/agent-defense/parallax/releases
+note: >-
+  The only dated, public change record Scalarr Inc. publishes is the GitHub
+  Releases feed for Parallax. Neither edgelabs.ai nor scalarr.io publishes a
+  product changelog or release-notes page, so the hosted AI EdgeLabs platform has
+  no public change history at all. Release tagging is inconsistent — v0.1.0,
+  v0.2.0 and v0.3.0 use the plain `vX.Y.Z` form while v.0.4.0, v.0.5.0 and
+  v.0.6.0 insert a period after the v, which breaks semver tooling.
+scheme: semver
+scheme_note: Semantic versioning, with an irregular `v.` tag prefix from 0.4.0 onward.
+current_version: v.0.6.0
+current_version_date: '2026-06-05'
+feed: https://github.com/agent-defense/parallax/releases.atom
+entries:
+  - version: v.0.6.0
+    date: '2026-06-05'
+    breaking: true
+    breaking_note: >-
+      Rules were moved out of the single config file into per-engine files under
+      rules/, driven by rules_file / rules_dir. An existing config that inlined
+      its full ruleset needs to be restructured.
+    highlights:
+      - Config modularization — rules externalized to rules/<engine>/*.yaml.
+      - Fixed a loader bug where rules_file was ignored for CEL evaluators, restoring 15 rules at startup.
+      - Policy alignment across CEL and Regex — chmod 777 upgraded to block/high, sudo set to detect-only by default.
+      - All 14 Sigma rules promoted to stable; broad pipe operators removed to cut false positives.
+      - 54 active rules across 11 evaluators verified end to end.
+  - version: v.0.5.0
+    date: '2026-05-28'
+    breaking: false
+    additions:
+      - Codex CLI (OpenAI) integration.
+    highlights:
+      - Rules and documentation inconsistencies fixed.
+      - README hero header, badges and section icons.
+  - version: v.0.4.0
+    date: '2026-05-14'
+    breaking: false
+    additions:
+      - Claude Code integration, later rewritten in Rust.
+      - Rule priorities.
+      - Rules and integrations shipped inside the release archive.
+    highlights:
+      - Improved build artifacts, quick-start docs and config discovery.
+      - priority and src added to event data.
+  - version: v0.3.0
+    date: '2026-04-17'
+    breaking: false
+    highlights:
+      - Release published with no accompanying notes.
+tags_without_releases:
+  - v0.2.0
+  - v0.1.0
+release_cadence_days: 49
+first_release: '2026-04-17'
+entry_count: 4

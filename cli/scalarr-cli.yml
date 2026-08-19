@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/agent-defense/parallax#cli-reference
+name: parallax
+description: >-
+  First-party command-line binary for Parallax, the Apache-2.0 runtime security
+  engine published by Scalarr Inc. (AI EdgeLabs). One static Rust executable with
+  no runtime dependencies; it both RUNS the evaluation server and REWRITES the
+  configuration of supported agent frameworks so their lifecycle events route
+  through it.
+official: true
+license: Apache-2.0
+version: v.0.6.0
+repository: https://github.com/agent-defense/parallax
+install:
+  - method: github-release
+    detail: Download a pre-built tarball for aarch64/x86_64 macOS or linux-musl from https://github.com/agent-defense/parallax/releases/latest
+  - method: source
+    detail: git clone https://github.com/agent-defense/parallax && cargo build --release
+    requires: Rust 1.70+
+commands:
+  - name: serve
+    summary: Run the evaluation server; auto-discovers ./parallax.yaml and a sibling ./rules/ tree.
+    flags:
+      - flag: -c, --config <PATH>
+        description: Config file path.
+      - flag: --host <HOST>
+        description: Override the bind host.
+      - flag: --port <PORT>
+        description: Override the bind port.
+      - flag: --mode <MODE>
+        description: server or proxy.
+        default: server
+      - flag: --log-level <LEVEL>
+        description: Log level.
+        default: info
+  - name: setup
+    summary: Rewrite an agent framework's configuration so its events route through Parallax.
+    subcommands:
+      - name: openclaw
+        summary: Configure OpenClaw to route through Parallax (proxy or plugin mode).
+        flags:
+          - flag: --host <HOST>
+            default: 127.0.0.1
+          - flag: --port <PORT>
+            default: '9920'
+          - flag: --model <MODEL>
+            default: claude-sonnet-4-20250514
+      - name: claudecode
+        summary: Write Claude Code lifecycle hooks into .claude/settings.json.
+        flags:
+          - flag: --host <HOST>
+            default: 127.0.0.1
+          - flag: --port <PORT>
+            default: '9920'
+      - name: codex
+        summary: Write notify, PreToolUse and PostToolUse hooks into ~/.codex/config.toml.
+        flags:
+          - flag: --host <HOST>
+            default: 127.0.0.1
+          - flag: --port <PORT>
+            default: '9920'
+  - name: revert
+    summary: Undo a setup, restoring the framework's original configuration.
+    subcommands:
+      - name: openclaw
+        flags:
+          - flag: --model <MODEL>
+            default: claude-sonnet-4-20250514
+      - name: claudecode
+      - name: codex
+flows:
+  - name: Local evaluation server
+    steps:
+      - parallax serve
+      - curl http://127.0.0.1:9920/health
+      - POST events to http://127.0.0.1:9920/evaluate from the agent
+  - name: Transparent proxy in front of the LLM API
+    steps:
+      - parallax serve --mode proxy
+      - Point the agent at http://127.0.0.1:9920/anthropic/v1/messages
+  - name: Guard a coding agent
+    steps:
+      - parallax setup claudecode
+      - parallax serve
+      - parallax revert claudecode
+supported_frameworks:
+  - openclaw
+  - claudecode
+  - codex
+note: >-
+  The binary itself is catalogued in packages/scalarr-packages.yml. LangChain,
+  CrewAI and the OpenAI Agents SDK are named on the roadmap as future setup
+  targets and are NOT supported today.

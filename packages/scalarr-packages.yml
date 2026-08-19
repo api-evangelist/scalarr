@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/agent-defense/parallax (GitHub Releases API), the repository
+  Cargo.toml and integrations/openclaw/package.json, and
+  https://static.edgelabs.ai/agent-install.sh
+note: >-
+  Scalarr Inc. publishes NO client SDK in any public package registry. What it
+  does distribute is (a) pre-built Parallax server binaries as GitHub release
+  assets, (b) an OpenClaw plugin that ships inside the repository and is not
+  published to npm, and (c) two unpinned CDN/container distributions for the AI
+  EdgeLabs sensor. crates.io/crates/parallax is an UNRELATED, yanked crate owned
+  by a different author (parsec-cloud wrapper) — Parallax is not on crates.io.
+  A Python client (parallax-client) and a TypeScript client (@parallax/client)
+  are named on the project roadmap only; neither exists on PyPI or npm today
+  (both probed, 404). No SDKs pointer is emitted in apis.yml for that reason.
+packages:
+  - name: parallax
+    language: rust
+    registry: github-releases
+    official: true
+    url: https://github.com/agent-defense/parallax/releases/latest
+    repository: https://github.com/agent-defense/parallax
+    license: Apache-2.0
+    version: v.0.6.0
+    published: '2026-06-05'
+    kind: server-binary
+    targets:
+      - aarch64-apple-darwin
+      - x86_64-apple-darwin
+      - aarch64-unknown-linux-musl
+      - x86_64-unknown-linux-musl
+    note: >-
+      Single static binary, no runtime dependencies. Four platform tarballs per
+      release. Cargo.toml declares version 0.6.0 matching the release tag.
+      Distributed only through GitHub Releases — not published to crates.io.
+  - name: parallax-security
+    language: typescript
+    registry: null
+    official: true
+    url: https://github.com/agent-defense/parallax/tree/main/integrations/openclaw
+    repository: https://github.com/agent-defense/parallax
+    license: Apache-2.0
+    version: 0.6.0
+    published: null
+    kind: plugin
+    peer_dependencies:
+      openclaw: '>=2026.3.0'
+    note: >-
+      OpenClaw plugin, versioned 0.6.0 in its package.json, but NOT published to
+      npm (registry.npmjs.org/parallax-security probed 2026-08-13, 404). Consumers
+      install it from the repository checkout, so there is no registry publish date
+      to record — published is null by fact, not by omission.
+  - name: parallax-hooks
+    language: rust
+    registry: null
+    official: true
+    url: https://github.com/agent-defense/parallax/tree/main/integrations/claudecode
+    version: null
+    published: null
+    kind: workspace-crate
+    note: >-
+      Path dependency inside the parallax workspace (Claude Code lifecycle hooks).
+      Not independently versioned and not published to crates.io — version null
+      means checked and absent.
+  - name: parallax-codex-hooks
+    language: rust
+    registry: null
+    official: true
+    url: https://github.com/agent-defense/parallax/tree/main/integrations/codex
+    version: null
+    published: null
+    kind: workspace-crate
+    note: >-
+      Path dependency inside the parallax workspace (Codex CLI hooks). Not
+      independently versioned and not published to crates.io.
+  - name: agent-install.sh
+    language: shell
+    registry: cdn
+    official: true
+    url: https://static.edgelabs.ai/agent-install.sh
+    version: null
+    published: null
+    kind: installer
+    note: >-
+      AI EdgeLabs sensor installer, served unpinned from the vendor CDN (HTTP 200,
+      application/x-sh, 9,969 bytes on 2026-08-13). The URL carries no version, so
+      a consumer cannot tell which build they are executing — version null records
+      that the distribution is unpinned, not that it was unchecked.
+  - name: ai-sensor/ai-sensor
+    language: container
+    registry: registry.edgelabs.ai
+    official: true
+    url: https://static.edgelabs.ai/agent-install.sh
+    version: null
+    published: null
+    kind: container-image
+    tag: latest
+    note: >-
+      Sensor container image pulled by agent-install.sh from the private vendor
+      registry registry.edgelabs.ai as ai-sensor/ai-sensor:latest. The tag floats
+      to latest and the registry is not anonymously browsable, so no version or
+      publish date can be read.
+summary:
+  package_count: 6
+  official_count: 6
+  registry_published: 1
+  client_sdk_count: 0

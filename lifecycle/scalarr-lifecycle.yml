@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/agent-defense/parallax (releases, tags, README roadmap),
+  https://edgelabs.ai/pricing, and DNS/HTTP probes of scalarr.io, edgelabs.ai,
+  status.edgelabs.ai and api.scalarr.io
+versioning:
+  scheme: semver
+  transport: none
+  detail: >-
+    Parallax versions are carried only in git tags and in the `version` field of
+    GET /health. No version prefix, header, or media-type parameter appears in
+    either API. The AI EdgeLabs portal API is served under a bare /api/ prefix
+    with no version segment.
+  current: v.0.6.0
+  current_date: '2026-06-05'
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, no Sunset/Deprecation header support, and no advance
+    notice commitment is published for any surface. The 0.6.0 release removed the
+    inline-ruleset config layout without a deprecation window. No Deprecation
+    pointer is emitted in apis.yml.
+status_page:
+  published: false
+  url: null
+  note: >-
+    status.edgelabs.ai does not resolve, and no status or uptime page is linked
+    from edgelabs.ai, portal.edgelabs.ai or scalarr.io. No StatusPage pointer is
+    emitted.
+sla:
+  published: true
+  detail: >-
+    Support-response SLAs only, published on the pricing page and attached to a
+    tier: standard support on Free, "24h SLA support" on Pro, priority support on
+    Growth, and "custom SLAs" on Enterprise. No uptime, availability or latency
+    commitment is published for the hosted platform.
+  source: https://edgelabs.ai/pricing
+roadmap:
+  published: true
+  url: https://github.com/agent-defense/parallax#-roadmap
+  detail: >-
+    A written roadmap ships in the Parallax README in four themes — multi-framework
+    and multi-provider support (LangChain, CrewAI, OpenAI Agents SDK, an
+    OpenAI-compatible /v1/chat/completions proxy mode, configurable upstream),
+    advanced evaluators (embedding-based semantic prompt-injection detection, tool
+    argument JSON Schema validation, multi-turn escalation detection, token budget
+    enforcement), extended lifecycle stages (response.after, memory.before, RAG
+    retrieval.before/after, rule hot-reload), and SDKs/ecosystem (a Python client
+    parallax-client, a TypeScript client @parallax/client, Slack/PagerDuty/SIEM
+    webhook connectors, a dashboard UI). None of these exists today. The AI
+    EdgeLabs Compliance Center page separately names HIPAA, ISO/IEC 62443, PCI DSS
+    and NIST as roadmap frameworks beyond the shipped NIS2 and CRA mappings.
+  dated: false
+deprecated_operations: []
+legacy_surface:
+  note: >-
+    The original Scalarr mobile ad-fraud business appears dormant rather than
+    formally retired. scalarr.io still serves (HTTP 200) but its sitemap carries
+    2022 lastmod dates and the newest blog entry is a 2023 event announcement;
+    api.scalarr.io resolves and answers on every path with the default OpenResty
+    404 page, i.e. the vhost is up with nothing behind it. No end-of-life notice
+    is published for Protection Suite, DeepView or Blocklist.
+  evidence:
+    - url: https://api.scalarr.io/
+      status: 200
+      note: OpenResty default welcome page
+    - url: https://api.scalarr.io/v1/
+      status: 404
+    - url: https://scalarr.io/sitemap.xml
+      status: 200
+      note: lastmod values as old as 2022

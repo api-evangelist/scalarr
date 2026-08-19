@@ -1,0 +1,71 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  https://github.com/agent-defense/parallax (README, docs/integrations/generic.md,
+  src/server/api.rs), a live unauthenticated probe of https://portal.edgelabs.ai/api/,
+  and the identity providers referenced in the portal application bundle
+  https://portal.edgelabs.ai/main.f9a8cb7963b57ff8.js
+note: >-
+  Scalarr publishes no OpenAPI, so there are no securitySchemes to derive from;
+  this profile is built from the provider's own source/docs and from what the
+  live endpoints actually returned. derive-authentication.py produced nothing for
+  this repo because there is no openapi/ directory.
+apis:
+  - api: Parallax Evaluation API
+    schemes: []
+    model: none
+    transport_security: none-by-default
+    detail: >-
+      The Parallax server ships with NO authentication on either endpoint. The
+      axum router in src/server/api.rs registers POST /evaluate and GET /health
+      with no auth extractor or middleware, and the shipped parallax.yaml binds
+      the listener to host 127.0.0.1 port 9920. Security is positional: the
+      server is expected to be reachable only from the agent process on the same
+      host (or inside the same pod/network namespace). There is no API key, no
+      bearer token, no mTLS option and no config key for one. Anyone who can
+      reach the port can submit evaluation events and read /health, which
+      discloses the running version and evaluator count.
+    recommendations:
+      - Do not bind Parallax to 0.0.0.0 without a fronting proxy that authenticates callers.
+      - Treat the absence of an auth option as a deployment constraint, not a defaults question.
+  - api: AI EdgeLabs Portal API
+    schemes:
+      - type: http
+        scheme: bearer
+        confirmed: false
+        note: >-
+          The API rejects anonymous requests, but the challenge is a JSON body,
+          not a WWW-Authenticate header, so the token type cannot be confirmed
+          without credentials.
+    model: session-or-token
+    federated_login:
+      - provider: Google
+        evidence: >-
+          The portal bundle requests the OAuth scopes
+          https://www.googleapis.com/auth/userinfo.email and
+          https://www.googleapis.com/auth/userinfo.profile.
+      - provider: GitHub
+        evidence: >-
+          The portal bundle constructs a https://github.com/login/oauth/authorize
+          request.
+    detail: >-
+      https://portal.edgelabs.ai/api/ and every path beneath it answered HTTP 401
+      with {"message":"Unauthorized","status":401,"errorCode":101,
+      "title":"Unauthorized"} on 2026-08-13. No WWW-Authenticate header was
+      returned, no /.well-known/oauth-authorization-server or
+      /.well-known/openid-configuration document is served (both paths return the
+      SPA HTML shell, not a document), and no authentication documentation is
+      published. Sign-in to the console itself is federated through Google and
+      GitHub OAuth; whether the same tokens authorize the API, or a separate key
+      is issued in-app, cannot be established without an account.
+    gated: true
+oauth_scopes:
+  published: false
+  note: >-
+    No scope reference is published and no oauth2 flow is declared anywhere, so
+    no scopes/ artifact was written.
+summary:
+  documented_auth_pages: 0
+  schemes_confirmed: 0
+  unauthenticated_surfaces: 1
+  gated_surfaces: 1

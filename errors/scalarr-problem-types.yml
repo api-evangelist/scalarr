@@ -1,0 +1,66 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Live probe of https://portal.edgelabs.ai/api/ (2026-08-13) and
+  https://github.com/agent-defense/parallax/blob/main/src/server/api.rs
+format: vendor-json
+rfc9457: false
+note: >-
+  Scalarr publishes no error reference page and no OpenAPI, so there are no
+  4xx/5xx response objects to derive from. This catalog records only errors
+  actually OBSERVED on a live response or read verbatim from the provider's own
+  published source. Neither surface uses application/problem+json.
+envelopes:
+  - api: AI EdgeLabs Portal API
+    content_type: application/json
+    fields:
+      - name: message
+        type: string
+        description: Human-readable summary.
+      - name: status
+        type: integer
+        description: Mirror of the HTTP status code.
+      - name: errorCode
+        type: integer
+        description: Vendor-specific numeric code, narrower than the HTTP status.
+      - name: title
+        type: string
+        description: Short label.
+  - api: Parallax Evaluation API
+    content_type: application/json
+    fields:
+      - name: error
+        type: string
+        description: Serialization/rejection message from the axum JSON extractor.
+problem_types:
+  - code: 101
+    http_status: 401
+    title: Unauthorized
+    api: AI EdgeLabs Portal API
+    envelope: '{"message":"Unauthorized","status":401,"errorCode":101,"title":"Unauthorized"}'
+    method: probed
+    observed: '2026-08-13'
+    observed_at: https://portal.edgelabs.ai/api/
+    remediation: >-
+      Authenticate to the AI EdgeLabs console. The challenge carries no
+      WWW-Authenticate header and no auth documentation is published, so the
+      credential type must be obtained from the vendor.
+  - code: null
+    http_status: 400
+    title: Malformed request body
+    api: Parallax Evaluation API
+    envelope: '{"error": "<JsonRejection message>"}'
+    method: derived
+    source: src/server/api.rs handle_rejection()
+    remediation: >-
+      Send a JSON body that deserializes into EvaluateRequest. `stage` is the only
+      required field and must be one of message.before, tool.before, tool.after,
+      params.before.
+gaps:
+  - No published error reference page for either API.
+  - The portal's numeric errorCode space is undocumented; only 101 has been observed.
+  - Parallax returns no structured error code, only a free-text string.
+summary:
+  problem_type_count: 2
+  observed_live: 1
+  derived_from_source: 1
