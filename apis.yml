@@ -55,6 +55,22 @@ tags:
 - Vulnerability Management
 - Compliance
 - NIS2
+- Machine-Learning
+- Artificial Intelligence
+- Open-Source
+- Fraud Detection
+- Mobile Ad Fraud
+tags_raw:
+- Company
+- Cybersecurity
+- Runtime Security
+- AI Agent Security
+- Container Security
+- Kubernetes
+- Edge Computing
+- Vulnerability Management
+- Compliance
+- NIS2
 - Machine Learning
 - Artificial Intelligence
 - Open Source
@@ -76,6 +92,12 @@ apis:
   humanURL: https://github.com/agent-defense/parallax
   baseURL: http://{host}:{port}
   tags:
+  - Runtime Security
+  - AI Agent Security
+  - Open-Source
+  - Prompt Injection
+  - Policy Enforcement
+  tags_raw:
   - Runtime Security
   - AI Agent Security
   - Open Source
