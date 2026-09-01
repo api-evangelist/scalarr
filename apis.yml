@@ -153,6 +153,9 @@ apis:
   - type: ErrorCatalog
     url: errors/scalarr-problem-types.yml
 common:
+- type: License
+  name: Apache-2.0
+  url: https://github.com/agent-defense/parallax/blob/main/LICENSE
 - type: Website
   url: https://scalarr.io
 - type: Website
