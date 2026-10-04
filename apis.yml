@@ -67,10 +67,10 @@ tags:
 - Vulnerability Management
 - Compliance
 - NIS2
-- Machine-Learning
+- Machine Learning
 - Artificial Intelligence
-- Open-Source
-- Fraud Detection
+- Open Source
+- Fraud Prevention
 - Mobile Ad Fraud
 tags_raw:
 - Company
@@ -88,6 +88,8 @@ tags_raw:
 - Open Source
 - Fraud Detection
 - Mobile Ad Fraud
+- Machine-Learning
+- Open-Source
 apis:
 - name: Parallax Evaluation API
   description: >-
@@ -106,7 +108,7 @@ apis:
   tags:
   - Runtime Security
   - AI Agent Security
-  - Open-Source
+  - Open Source
   - Prompt Injection
   - Policy Enforcement
   tags_raw:
@@ -115,6 +117,7 @@ apis:
   - Open Source
   - Prompt Injection
   - Policy Enforcement
+  - Open-Source
   properties:
   - type: Documentation
     url: https://github.com/agent-defense/parallax/tree/main/docs
