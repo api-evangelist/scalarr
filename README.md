@@ -64,6 +64,113 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Scalarr is a company surfaced as a portfolio company of speedinvest and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Scalarr Inc. is a cybersecurity company that now operates primarily as AI EdgeLabs (edgelabs.ai), an AI-native runtime detection and response platform for workloads, containers, GPU environments, AI agents and edge infrastructure, with local inference, zero data egress, and out-of-the-box NIS2 and Cyber Resilience Act control mapping in its Compliance Center. It publishes Parallax, an Apache-2.0 runtime security engine for AI agents written in Rust, which ships as a single binary exposing a two-endpoint HTTP evaluation API (POST /evaluate, GET /health) plus a proxy mode that sits between an agent and the LLM API, 54 curated rules across five evaluator engines, and first-party integrations for OpenClaw, Claude Code and the Codex CLI. Scalarr's original business - the machine-learning mobile ad-fraud Protection Suite and DeepView on scalarr.io - appears dormant: the site is still served but its content and sitemap have not been updated since 2022-2023 and api.scalarr.io answers every path with a default OpenResty 404. Scalarr is a portfolio company of Speedinvest. The hosted AI EdgeLabs platform API at portal.edgelabs.ai/api/ is real but undocumented and authentication-gated; no OpenAPI, AsyncAPI, GraphQL schema or MCP server is published for any surface.
 
-Backed by: speedinvest
+**Areas:** Company · Cybersecurity · Runtime Security · AI Agent Security · Container Security · Kubernetes · Edge Computing · Vulnerability Management · Compliance · NIS2 · Machine Learning · Artificial Intelligence
+
+## Scalarr on APIs.io
+
+Everything profiled for Scalarr is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/scalarr/](https://apis.io/providers/scalarr/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Parallax Evaluation API](https://apis.io/apis/scalarr/parallax-evaluation-api/) — Self-hosted HTTP API of Parallax, the Apache-2.0 runtime security engine Scalarr publishes for AI agents. Two endpoints: POST /evaluate takes a lifecycle…
+- [AI EdgeLabs Portal API](https://apis.io/apis/scalarr/ai-edgelabs-portal-api/) — The HTTP API behind the AI EdgeLabs customer console at portal.edgelabs.ai. Confirmed live on 2026-08-13 - every path under /api/ answered HTTP 401 with a…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Scalarr Parallax Webhooks](https://apis.io/asyncapis/scalarr/scalarr-parallax-webhooks/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Scalarr Authentication](https://apis.io/security/scalarr/scalarr-authentication/)
+- [Scalarr Domain Security](https://apis.io/security/scalarr/scalarr-domain-security/)
+- [Scalarr Vulnerability Disclosure](https://apis.io/security/scalarr/scalarr-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Scalarr Plans Pricing](https://apis.io/plans/scalarr/scalarr-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Scalarr Rate Limits](https://apis.io/rate-limits/scalarr/scalarr-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://scalarr.io)
+- [Pricing](https://edgelabs.ai/pricing)
+- [Sign up](https://portal.edgelabs.ai)
+- [Support](https://edgelabs.ai/contact-us)
+- [Blog](https://edgelabs.ai/blog)
+- [Terms of service](https://scalarr.io/document/services_agreement/)
+- [Privacy policy](https://scalarr.io/document/scalarr-privacy-policy/)
+- [GitHub](https://github.com/agent-defense)
+
+## API Evangelist rating
+
+**Kin Score 50.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 54.8 |
+| Access clarity | 63.2 |
+
+**Agent readiness 21.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 28.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/scalarr/](https://apis.io/providers/scalarr/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Scalarr: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/scalarr/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
